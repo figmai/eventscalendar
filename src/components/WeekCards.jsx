@@ -1,31 +1,26 @@
-import { forwardRef } from 'react'
-import { format, isSameDay } from 'date-fns'
-import Card from './Card'
+import { forwardRef } from 'react';
+import { getWeekDays } from '../utils/weekUtils';
+import { isSameDay } from 'date-fns';
+import Card from './Card';
+import './WeekCards.css';
 
-const WeekCards = forwardRef(function WeekCards(
-  { weekDays, selectedDay, onSelectDay },
-  ref
-) {
+const WeekCards = forwardRef(({ selectedWeek, selectedDay, onDaySelect }, ref) => {
+  const weekDays = getWeekDays(selectedWeek.start);
+
   return (
-    <div
-      className="week-cards"
-      role="list"
-      aria-label="Days of the selected week"
-      ref={ref}
-    >
-      {weekDays.map((date) => (
-        <Card
-          key={date.toISOString()}
-          date={date}
-          dayName={format(date, 'EEEE')}
-          dayNumber={format(date, 'd')}
-          monthName={format(date, 'MMMM')}
-          isSelected={selectedDay && isSameDay(date, selectedDay)}
-          onSelect={onSelectDay}
-        />
-      ))}
+    <div className="week-cards-container" ref={ref}>
+      <div className="week-cards-grid">
+        {weekDays.map((date, index) => (
+          <Card
+            key={index}
+            date={date}
+            isSelected={selectedDay ? isSameDay(date, selectedDay) : false}
+            onClick={() => onDaySelect(date, index)}
+          />
+        ))}
+      </div>
     </div>
-  )
-})
+  );
+});
 
-export default WeekCards
+export default WeekCards;

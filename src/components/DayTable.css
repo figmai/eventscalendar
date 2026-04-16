@@ -1,0 +1,61 @@
+.day-table {
+  background-color: #ffffff;
+}
+
+.day-table-title-bar--hidden {
+  visibility: hidden;
+}
+
+.day-table-title-bar {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 9px 12px;
+  background-color: #f3f4f6;
+  text-transform: capitalize;
+}
+
+
+.day-table-day-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.day-table-date {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.day-table-scroll-wrapper {
+  overflow-x: auto;
+}
+
+.day-table-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+  table-layout: fixed;
+}
+
+.day-table-thead--hidden {
+  visibility: hidden;
+}
+
+.day-table-date-col {
+  font-weight: 700;
+  color: #111827;
+}
+
+.day-table-th {
+  padding: 9px 12px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}

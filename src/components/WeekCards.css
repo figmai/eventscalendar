@@ -1,0 +1,57 @@
+.week-cards-container {
+  position: sticky;
+  top: var(--sticky-offset-header, 68px);
+  z-index: 19;
+  height: 128px;
+  padding: 16px;
+  background-color: #f9fafb;
+}
+
+.week-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.75rem;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Responsive layout for tablets */
+@media (max-width: 1024px) {
+  .week-cards-container {
+    height: auto;
+    padding: 12px;
+  }
+
+  .week-cards-grid {
+    gap: 0.5rem;
+  }
+}
+
+/* Responsive layout for mobile */
+@media (max-width: 768px) {
+  .week-cards-container {
+    height: auto;
+    padding: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .week-cards-grid {
+    grid-template-columns: repeat(7, minmax(80px, 1fr));
+    gap: 0.5rem;
+    min-width: max-content;
+  }
+
+  .week-cards-grid .card {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 480px) {
+  .week-cards-grid {
+    grid-template-columns: repeat(7, minmax(60px, 1fr));
+    gap: 0.375rem;
+  }
+}

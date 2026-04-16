@@ -1,37 +1,36 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import './CollapsibleRow.css';
 
-function CollapsibleRow({ product }) {
-  const [expanded, setExpanded] = useState(false)
+const COLUMNS = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5', 'Label 6', 'Label 7', 'Label 8', 'Label 9'];
+
+const CollapsibleRow = ({ product }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <>
       <tr
-        className={`collapsible-row__toggle${expanded ? ' collapsible-row__toggle--expanded' : ''}`}
-        onClick={() => setExpanded((prev) => !prev)}
-        role="button"
-        tabIndex={0}
-        aria-expanded={expanded}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            setExpanded((prev) => !prev)
-          }
-        }}
+        className="collapsible-row-header"
+        onClick={() => setIsExpanded((prev) => !prev)}
+        aria-expanded={isExpanded}
       >
-        <td colSpan={9}>
-          <span className="collapsible-row__icon">{expanded ? '▾' : '▸'}</span>
+        <td colSpan={11} className="collapsible-row-title">
+          <span className={`collapsible-row-icon ${isExpanded ? 'collapsible-row-icon--open' : ''}`}>▶</span>
           {product.name}
         </td>
       </tr>
-      {expanded && (
-        <tr className="collapsible-row__data">
-          {product.data.map((value, i) => (
-            <td key={i}>{value}</td>
+      {isExpanded && (
+        <tr className="collapsible-row-data">
+          <td className="collapsible-row-cell"></td>
+          <td className="collapsible-row-cell"></td>
+          {COLUMNS.map((_, i) => (
+            <td key={i} className="collapsible-row-cell">
+              {product.data[i] ?? '—'}
+            </td>
           ))}
         </tr>
       )}
     </>
-  )
-}
+  );
+};
 
-export default CollapsibleRow
+export default CollapsibleRow;

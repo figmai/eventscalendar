@@ -1,35 +1,43 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react';
+import { format } from 'date-fns';
+import { isToday } from '../utils/weekUtils';
+import './Card.css';
 
-function Card({ date, dayName, dayNumber, monthName, isSelected, onSelect }) {
-  const ref = useRef(null)
+const Card = ({ date, isSelected, onClick }) => {
+  const cardRef = useRef(null);
+  const dayName = format(date, 'EEEE');
+  const dayNumber = format(date, 'd');
+  const monthName = format(date, 'MMMM');
+  const isTodayDate = isToday(date);
 
   useEffect(() => {
-    if (isSelected && ref.current) {
-      ref.current.focus({ preventScroll: true })
+    if (isSelected) {
+      cardRef.current?.focus({ preventScroll: true });
+    } else {
+      cardRef.current?.blur();
     }
-  }, [isSelected])
+  }, [isSelected]);
+
+  const handleClick = () => {
+    onClick?.();
+  };
 
   return (
     <div
-      ref={ref}
-      className={`card${isSelected ? ' card--selected' : ''}`}
-      role="listitem"
-      aria-label={`${dayName}, ${monthName} ${dayNumber}${isSelected ? ' (Selected)' : ''}`}
-      aria-current={isSelected ? 'true' : undefined}
-      onClick={() => onSelect(date)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          onSelect(date)
-        }
-      }}
+      ref={cardRef}
+      className={`card ${isTodayDate ? 'card-today' : ''} ${isSelected ? 'card-selected' : ''}`}
+      role="button"
       tabIndex={0}
+      aria-label={`${dayName}, ${monthName} ${dayNumber}`}
+      aria-pressed={isSelected}
+      onClick={handleClick}
+      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
     >
-      <span className="card__day-name">{dayName}</span>
-      <span className="card__day-number">{dayNumber}</span>
-      <span className="card__month">{monthName}</span>
+      <div className="card-day-name">{dayName}</div>
+      <div className="card-day-number">{dayNumber}</div>
+      <div className="card-month-name">{monthName}</div>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;
